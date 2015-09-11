@@ -1,0 +1,25 @@
+language: python
+
+python:
+  - "2.7"
+
+sudo: required
+
+env:
+  global:
+    - IMAGE_NAME=hepdata
+    - IMAGE_NAME_REMOTE=hepdata/hepdata
+    - secure: "Q99QeKaF4BeG1bpeMpaI6cVzwFLg/3ILjNgCfv0fYwktQL8vSfK2EAd8O8Qst02tmYqTleVvYWwTB5hLoGXHKLzo2PVw8N/VLA/QTwxcAI5C55429RL8uAnyIq6BpX+OQwx10Lq6T4BCiICQD7g4Pd4AxdyHHRn6XqO8p9Mrp3l2IFuCZ6ZzDK+LGgjR5khlhQGIoKcM+qX3Lob/Lhq/4jIsBLvLL7KJdS8qFW5Ps493ozOs08S6Fhpe2QQH2DUhXX0d6fHZ91H2JuXEfGwPxiamYeBaXvfPcuIzM9Stuh+CRnPvUHfSqKW6+hQ7aCDVCzs5kXl+hxkBs5QnNHuKy8pK5PnHG0B/nB0CXDSInqg58n+WaYBSmmyCT3r1I5/h0kWJcTEubRnp3DqX4TUXdre4dVAMEHOXlVbQT9Xgn/sZGwdKNktoOHdms1hp+RmE7UoR5t+W7Te7txzFdVUmIZJxHie0gwQC5S3W2mty3r2sQXhb12AYVYCDmU0lc4eaIrZyu+F79lBNQYq0bXnnnfl9hVYQwRSVWa/RNKJppYJNLzvW7OzE0riHz8Fl+ge927IVfu+SniN7+ZbnTnYSej7gt7IroceSHxJkLnA13Nxd1xA6ZthKVxhwxeNpUcMJ6kvD4gC40q517klKhY0MtZK9rK1IsGsthhI1lQ2x+VM="
+    - secure: "gxGPMRGRABDAQdtN1kjNQgk9ztpxJWRjZh0smcP3997NHqOOiFQuodnnk1LOB2soIsJsIXrKpyje9+BuTn4rhr8habtKfEm1JHY8rZy134Kvu1Fa/qa72uMoSpr1YynJr96dSfpulxVJWQXjjLpXePi0Wh+sMa3UErhyUwDqJ1V9wDRnagWHygPboBLMjXLr1W9cgTBzZZtyqPKoZs5g6iHHLJgXjMt9T1q6x/YGSv/BG6w7/zJNa1hxQr5pwC5ljj5zVh+tqcmg+K8H/9dd++7Eeo4q4t717p3K3CZgBy4fuXtFAHUm6QhzznXKP9s9vLORl/985Yb/CN57hzcOQBQ7iTsrDZKCi1MEx2TiZlTnQxlgO/5smO+MHRvCxP2woFRaRfBGYVdhOqn7NxQC2uNRs0u1/yRxcdv6aOtz2Qh/HxF5XQ33s8a4hK+aH2tFHEEC/fmnaSHPUE10iaX0PZMmBCNQOYHW9dO8m6xR5ch+WAXLOUKaUa/COG4XNO+gTR+KprLwV90G3w0wyH6cYj3BSaM5HlkFjiNr4c+6OJS9b6fl4Y1/PzOHbXVuKe/7sN153icoSahQPFmH22geeW/8Yn0fz4snaZ+ySVrkEo15H25b0I55VjeYKYcHge3tE53gTr6CDTFaVPmIGwPFE5yhw3eui0Ei8/v8D+Q4j9c="
+    - secure: "SsuAFKnzvbUuOWwVTRBtPzGV4J9/9pEF0a0yMDIRc4W8fSSA2r0kcFoiam25M+wiyoi0mgAbHhbR9/4plAZZGS/7p2i37clFuLcPGmo72/1EkkVAIsGoOYVskDViogMMYfLibj3mXuZ2f1fobrfdH4eeZo223K6UZRl5JLj9SH+MXPSpPvqmfAssdnORDZKa766vs2rlYN6j6+XT/lmSU0WoMrO+5yWdmEQE040g4ygMZz4po8tYggRPta7F5C6z0VPr8TGhcaIfTKsfpUKQhhyZlKzhDu+F+gQ8W+bkXuSvKpMI8YSqn3TSLxL/spJmJzd0KdRk8WxTXkW8Y5cW1M5RkbS/Pc/MVosOkKelaZD/cVAMrCuZ2gyijZiU6c4m/mw1B24HQqVdaabvpw2JsDQfqCDuum3GH55tbWAkE0RuwpzhlrbncQwI3bOLLUshVb3EUPki8hH+Ayhi4PE1FIESskBWfHs948UXWkx1q+9qc3ZqCndsotw7t1tMvZ6rCxhVBDkqmf6ptsJ2XHG/I8p7KFoY8vVyW4RyMlaXgw7IdEDDfLRKA2Z/soN0zrnxP6OnxXRQgvzCf/OmexHKGfiqEIandkeC9wORW6Dynr/MpaodsmV+k4odliffOT4+0QwLz0epISPtSa2QsWtuQZnuUWS4xZVw3UHqAasRqUc="
+cache:
+  - docker
+
+services:
+  - docker
+
+script:
+  - docker build -t $IMAGE_NAME .
+  - docker tag -f $IMAGE_NAME $IMAGE_NAME_REMOTE:latest
+  - docker login --password=$DOCKER_PASSWORD --email=$DOCKER_EMAIL --username=$DOCKER_USERNAME
+  - docker push $IMAGE_NAME_REMOTE:latest
