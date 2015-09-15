@@ -19,7 +19,12 @@ services:
   - docker
 
 script:
-  - docker build -t $IMAGE_NAME .
-  - docker tag -f $IMAGE_NAME $IMAGE_NAME_REMOTE:latest
   - docker login --password=$DOCKER_PASSWORD --email=$DOCKER_EMAIL --username=$DOCKER_USERNAME
-  - docker push $IMAGE_NAME_REMOTE:latest
+  # CI image
+  - docker build -t $IMAGE_NAME-deps -f dockerfile-deps .
+  - docker tag -f $IMAGE_NAME-deps $IMAGE_NAME_REMOTE:deps
+  - docker push $IMAGE_NAME_REMOTE:deps
+  # Production image
+  - docker build -t $IMAGE_NAME-prod -f dockerfile-prod .
+  - docker tag -f $IMAGE_NAME-prod $IMAGE_NAME_REMOTE:prod
+  - docker push $IMAGE_NAME_REMOTE:prod
