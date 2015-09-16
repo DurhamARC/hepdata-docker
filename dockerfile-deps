@@ -46,8 +46,8 @@ RUN apt-get install -y mysql-server-"${MYSQL_VERSION}"
 RUN npm update && npm install -g bower less clean-css uglify-js requirejs
 
 # Invenio
-RUN mkdir src && \
-    cd src/ && \
+RUN mkdir /src && \
+    cd /src/ && \
     git clone --branch=master https://github.com/HEPData/invenio.git && \
     cd invenio && \
     pip install -e .

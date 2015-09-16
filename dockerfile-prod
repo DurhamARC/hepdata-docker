@@ -59,8 +59,9 @@ RUN cd /src/ && \
     pip install -e .
 
 # Install Bower dependencies
-RUN inveniomanage bower -i bower-base.json > bower.json && \
-    bower install --silent --force-latest --allow-root
+RUN cd /src/hepdata && \
+    inveniomanage bower -i bower-base.json > bower.json && \
+    bower install --force-latest --allow-root
 
 # Configuration
 RUN inveniomanage config create secret-key && \
