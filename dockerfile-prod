@@ -96,4 +96,4 @@ CMD service mysql start && \
     sleep 7 && \
     inveniomanage runserver -h 0.0.0.0 -p 4000 -R
 
-# TODO CMD honcho start
+# TODO replace CMD with `CMD honcho start`
