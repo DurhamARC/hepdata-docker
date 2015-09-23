@@ -4,6 +4,7 @@ EXPOSE 4000
 
 ENV ES_VERSION 1.7.1
 ENV MYSQL_VERSION 5.6
+ENV NODE_MODULES /usr/local/lib/node_modules/
 
 RUN apt-get -y update && apt-get install -y \
 redis-server \
@@ -73,7 +74,6 @@ RUN inveniomanage config create secret-key && \
 # assets build?
 
 # Set NPM deps binaries
-ENV NODE_MODULES /usr/local/lib/node_modules/
 RUN inveniomanage config set LESS_BIN `find $NODE_MODULES -iname lessc | head -1` && \
     inveniomanage config set CLEANCSS_BIN `find $NODE_MODULES -iname cleancss | head -1` && \
     inveniomanage config set REQUIREJS_BIN `find $NODE_MODULES -iname r.js | head -1` && \
