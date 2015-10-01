@@ -26,21 +26,12 @@ libtiff-dev \
 libffi-dev \
 software-properties-common \
 python-dev \
-python-pip \
-# Only for testing
-firefox \
-chromium-browser \
-xvfb
+python-pip
 
 # Download ElasticSearch
 RUN wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-"${ES_VERSION}".zip && \
     unzip elasticsearch-"${ES_VERSION}".zip && \
     rm elasticsearch-"${ES_VERSION}".zip
-
-# Download chromedriver
-RUN wget http://chromedriver.storage.googleapis.com/2.12/chromedriver_linux64.zip && \
-    unzip chromedriver_linux64.zip -d /usr/bin && \
-    chmod 755 /usr/bin/chromedriver
 
 # For the new Nodejs to work
 RUN ln -s /usr/bin/nodejs /usr/bin/node

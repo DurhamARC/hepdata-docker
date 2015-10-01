@@ -5,6 +5,7 @@ EXPOSE 4000
 ENV ES_VERSION 1.7.1
 ENV MYSQL_VERSION 5.6
 ENV NODE_MODULES /usr/local/lib/node_modules/
+ENV ES_BIN /elasticsearch-$ES_VERSION/bin
 
 RUN apt-get -y update && apt-get install -y \
 redis-server \
@@ -90,10 +91,4 @@ RUN service mysql start && \
     inveniomanage database create --quiet && \
     inveniomanage hepdata_records populate > /dev/null 2>&1
 
-CMD service mysql start && \
-    service redis-server start && \
-    (./elasticsearch-"${ES_VERSION}"/bin/elasticsearch &) && \
-    sleep 7 && \
-    inveniomanage runserver -h 0.0.0.0 -p 4000 -R
-
-# TODO replace CMD with `CMD honcho start`
+CMD cd /src/hepdata && honcho start
